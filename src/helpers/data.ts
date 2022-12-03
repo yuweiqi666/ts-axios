@@ -11,7 +11,9 @@ export function transformResponse(data: any): any {
   if (typeof data === 'string') {
     try {
       return JSON.parse(data)
-    } catch (error) {}
+    } catch (error) {
+      // do noting
+    }
   }
   return data
 }
