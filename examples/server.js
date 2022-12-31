@@ -63,6 +63,53 @@ router.get('/error/timeout', function (req, res) {
   }, 3000)
 })
 
+router.post('/extend/post', function(req, res) {
+  res.json({
+    msg: req.body,
+    meta: '_extend_post',
+    username: 'zhangsan',
+    age: 18,
+    hobbies: ['code', 'ball', 'pc game']
+  })
+})
+
+router.put('/extend/put', function(req, res) {
+  res.json({
+    msg: req.body,
+    meta: '_extend_put'
+  })
+})
+
+router.patch('/extend/patch', function(req, res) {
+  res.json({
+    msg: req.body,
+    meta: '_extend_patch'
+  })
+})
+
+router.get('/extend/get', function(req, res) {
+  res.json({
+    meta: '_extend_get'
+  })
+})
+
+router.options('/extend/options', function(req, res) {
+  res.json({
+    meta: '_extend_options'
+  })
+})
+
+router.delete('/extend/delete', function(req, res) {
+  res.json({
+    meta: '_extend_delete'
+  })
+})
+
+router.head('/extend/head', function(req, res) {
+  res.json({
+    meta: '_extend_head'
+  })
+})
 
 app.use(router)
 
