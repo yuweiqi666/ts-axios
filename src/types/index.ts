@@ -59,4 +59,4 @@ interface AxiosInstance extends Axios {
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
-export { AxiosRequestConfig, AxiosPromise, AxiosResponse, AxiosError, AxiosInstance }
+export { AxiosRequestConfig, AxiosPromise, AxiosResponse, AxiosError, AxiosInstance, Method }
