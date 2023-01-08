@@ -1,4 +1,4 @@
-type Method =
+export type Method =
   | 'get'
   | 'GET'
   | 'delete'
@@ -14,7 +14,7 @@ type Method =
   | 'patch'
   | 'PATCH'
 
-interface AxiosRequestConfig {
+export interface AxiosRequestConfig {
   url?: string
   method?: Method
   data?: any
@@ -24,7 +24,7 @@ interface AxiosRequestConfig {
   timeout?: number
 }
 
-interface AxiosResponse<T = any> {
+export interface AxiosResponse<T = any> {
   data: T
   status: number
   statusText: string
@@ -33,9 +33,9 @@ interface AxiosResponse<T = any> {
   request: any
 }
 
-interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
+export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {}
 
-interface AxiosError extends Error {
+export interface AxiosError extends Error {
   isAxiosError: boolean
   config: AxiosRequestConfig
   code?: string | null
@@ -43,7 +43,11 @@ interface AxiosError extends Error {
   response?: AxiosResponse
 }
 
-interface Axios {
+export interface Axios {
+  interceptors: {
+    request: AxiosInterceptorManager<AxiosRequestConfig>
+    response: AxiosInterceptorManager<AxiosResponse>
+  }
   request<T = any>(config: AxiosRequestConfig): AxiosPromise<T>
   get<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
   delete<T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
@@ -54,9 +58,21 @@ interface Axios {
   patch<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
-interface AxiosInstance extends Axios {
+export interface AxiosInstance extends Axios {
   <T = any>(config: AxiosRequestConfig): AxiosPromise<T>
   <T = any>(url: string, config?: AxiosRequestConfig): AxiosPromise<T>
 }
 
-export { AxiosRequestConfig, AxiosPromise, AxiosResponse, AxiosError, AxiosInstance, Method }
+export interface AxiosInterceptorManager<T> {
+  use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
+
+  eject(id: number): void
+}
+
+export interface ResolvedFn<T> {
+  (val: T): T | Promise<T>
+}
+
+export interface RejectedFn {
+  (error: any): any
+}

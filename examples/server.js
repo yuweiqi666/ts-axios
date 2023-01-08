@@ -111,6 +111,15 @@ router.head('/extend/head', function(req, res) {
   })
 })
 
+
+router.get('/interceptor/get', function(req, res) {
+  res.json({
+    meta: 'test interceptor',
+    message: 'success',
+    code: 200
+  })
+})
+
 app.use(router)
 
 app.use(webpackDevMiddleware(compiler, {
