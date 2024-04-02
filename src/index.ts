@@ -1,19 +1,17 @@
-import AxiosRequestConfig from './types'
-import xhr from './xhr'
-import { buildURL } from './helpers/url'
+import Axios from './core/Axios'
+import { extend } from './helpers/utils'
+import { AxiosInstance } from './types/index'
 
-function axios(config: AxiosRequestConfig): void {
-  processConfig(config)
-  xhr(config)
+function createInstance(): AxiosInstance {
+  const context = new Axios()
+  const instance = Axios.prototype.request.bind(context)
+  extend(instance, context)
+  return instance as AxiosInstance
 }
 
-function processConfig(config: AxiosRequestConfig): void {
-  config.url = transformUrl(config)
-}
+const axios = createInstance()
 
-function transformUrl(config: AxiosRequestConfig): string {
-  const { url, params } = config
-  return buildURL(url, params)
-}
+
+export * from './types/index'
 
 export default axios
